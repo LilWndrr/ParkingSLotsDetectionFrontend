@@ -18,8 +18,11 @@ export default function useWebSocket(onMessage) {
   const connect = useCallback(() => {
     if (clientRef.current?.active) return;
 
+    const API_URL = import.meta.env.VITE_PUBLIC_API_URL || '';
+    const wsUrl = API_URL ? `${API_URL}/ws` : '/ws';
+
     const client = new Client({
-      webSocketFactory: () => new SockJS('/ws'),
+      webSocketFactory: () => new SockJS(wsUrl),
       reconnectDelay: 3000,
       heartbeatIncoming: 10000,
       heartbeatOutgoing: 10000,

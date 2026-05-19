@@ -2,7 +2,8 @@ import { useState, useRef, useEffect, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
-const API_BASE = '/api/v1/groundLevel';
+const API_URL = import.meta.env.VITE_PUBLIC_API_URL || '';
+const API_BASE = `${API_URL}/api/v1/groundLevel`;
 
 const MODES = { CAMERA: 'camera', MAP: 'map' };
 const CLOSE_THRESHOLD = 14;
@@ -452,7 +453,7 @@ export default function AdminSlotEditor() {
     if (!slots.length) { setMessage({ type: 'error', text: 'Draw at least one slot' }); return; }
     setSaving(true); setMessage(null);
     try {
-      await axios.post(mode === MODES.CAMERA ? '/save' : '/saveMap', generateJson());
+      await axios.post(mode === MODES.CAMERA ? `${API_URL}/save` : `${API_URL}/saveMap`, generateJson());
       setMessage({ type: 'success', text: `${slots.length} slot(s) saved!` });
     } catch (err) {
       setMessage({ type: 'error', text: 'Failed: ' + (err.response?.data || err.message) });
