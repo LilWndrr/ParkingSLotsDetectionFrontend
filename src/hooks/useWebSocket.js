@@ -1,6 +1,5 @@
 import { useEffect, useRef, useState, useCallback } from 'react';
 import { Client } from '@stomp/stompjs';
-import SockJS from 'sockjs-client/dist/sockjs';
 
 /**
  * Custom hook that manages a STOMP WebSocket connection.
@@ -19,10 +18,13 @@ export default function useWebSocket(onMessage) {
     if (clientRef.current?.active) return;
 
     const API_URL = (import.meta.env.VITE_PUBLIC_API_URL || '').trim();
-    const wsUrl = API_URL ? `${API_URL}/ws` : '/ws';
+    let wsUrl = '/ws-native';
+    if (API_URL) {
+      wsUrl = API_URL.replace(/^http/, 'ws') + '/ws-native';
+    }
 
     const client = new Client({
-      webSocketFactory: () => new SockJS(wsUrl),
+      brokerURL: wsUrl,
       reconnectDelay: 3000,
       heartbeatIncoming: 10000,
       heartbeatOutgoing: 10000,
