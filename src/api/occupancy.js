@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_BASE = import.meta.env.VITE_PUBLIC_API_URL || '';
+const API_BASE = (import.meta.env.VITE_PUBLIC_API_URL || '').trim();
 
 const api = axios.create({
   baseURL: API_BASE,

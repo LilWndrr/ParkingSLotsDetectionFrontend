@@ -2,7 +2,7 @@ import { useState, useRef, useEffect, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
-const API_URL = import.meta.env.VITE_PUBLIC_API_URL || '';
+const API_URL = (import.meta.env.VITE_PUBLIC_API_URL || '').trim();
 const API_BASE = `${API_URL}/api/v1/groundLevel`;
 
 const MODES = { CAMERA: 'camera', MAP: 'map' };

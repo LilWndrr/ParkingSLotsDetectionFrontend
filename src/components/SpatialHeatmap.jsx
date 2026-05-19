@@ -82,7 +82,7 @@ export default function SpatialHeatmap({ levelId, mapImageUrl }) {
     if (!levelId) return;
     setLoading(true);
     setSlots([]);
-    const API_URL = import.meta.env.VITE_PUBLIC_API_URL || '';
+    const API_URL = (import.meta.env.VITE_PUBLIC_API_URL || '').trim();
     fetch(`${API_URL}/api/v1/groundLevel/heatmap?level_id=${levelId}`)
       .then(r => r.ok ? r.json() : [])
       .then(data => setSlots(Array.isArray(data) ? data : []))

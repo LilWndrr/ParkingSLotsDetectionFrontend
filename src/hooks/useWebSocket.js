@@ -18,7 +18,7 @@ export default function useWebSocket(onMessage) {
   const connect = useCallback(() => {
     if (clientRef.current?.active) return;
 
-    const API_URL = import.meta.env.VITE_PUBLIC_API_URL || '';
+    const API_URL = (import.meta.env.VITE_PUBLIC_API_URL || '').trim();
     const wsUrl = API_URL ? `${API_URL}/ws` : '/ws';
 
     const client = new Client({
