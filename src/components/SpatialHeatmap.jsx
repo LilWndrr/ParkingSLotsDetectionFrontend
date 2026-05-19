@@ -83,7 +83,9 @@ export default function SpatialHeatmap({ levelId, mapImageUrl }) {
     setLoading(true);
     setSlots([]);
     const API_URL = (import.meta.env.VITE_PUBLIC_API_URL || '').trim();
-    fetch(`${API_URL}/api/v1/groundLevel/heatmap?level_id=${levelId}`)
+    fetch(`${API_URL}/api/v1/groundLevel/heatmap?level_id=${levelId}`, {
+      headers: { 'ngrok-skip-browser-warning': 'true' }
+    })
       .then(r => r.ok ? r.json() : [])
       .then(data => setSlots(Array.isArray(data) ? data : []))
       .catch(() => setSlots([]))

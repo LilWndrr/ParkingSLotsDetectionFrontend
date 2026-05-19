@@ -453,7 +453,9 @@ export default function AdminSlotEditor() {
     if (!slots.length) { setMessage({ type: 'error', text: 'Draw at least one slot' }); return; }
     setSaving(true); setMessage(null);
     try {
-      await axios.post(mode === MODES.CAMERA ? `${API_URL}/save` : `${API_URL}/saveMap`, generateJson());
+      await axios.post(mode === MODES.CAMERA ? `${API_URL}/save` : `${API_URL}/saveMap`, generateJson(), {
+        headers: { 'ngrok-skip-browser-warning': 'true' }
+      });
       setMessage({ type: 'success', text: `${slots.length} slot(s) saved!` });
     } catch (err) {
       setMessage({ type: 'error', text: 'Failed: ' + (err.response?.data || err.message) });
@@ -477,7 +479,12 @@ export default function AdminSlotEditor() {
       const res = await axios.post(
         `${API_BASE}/${encodeURIComponent(levelId.trim())}/upload-map`,
         formData,
-        { headers: { 'Content-Type': 'multipart/form-data' } }
+        { 
+          headers: { 
+            'Content-Type': 'multipart/form-data',
+            'ngrok-skip-browser-warning': 'true' 
+          } 
+        }
       );
       const cdnUrl = res.data?.url || res.data;
       setUploadedMapUrl(cdnUrl);

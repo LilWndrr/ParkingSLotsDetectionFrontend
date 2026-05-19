@@ -4,7 +4,10 @@ const API_BASE = (import.meta.env.VITE_PUBLIC_API_URL || '').trim();
 
 const api = axios.create({
   baseURL: API_BASE,
-  headers: { 'Content-Type': 'application/json' },
+  headers: { 
+    'Content-Type': 'application/json',
+    'ngrok-skip-browser-warning': 'true'
+  },
 });
 
 export async function fetchHourlyOccupancy(groundLevelId) {
